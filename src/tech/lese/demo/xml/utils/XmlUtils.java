@@ -37,15 +37,7 @@ public class XmlUtils {
         if(doc == null) 
             return map; 
         Element root = doc.getRootElement(); 
-        for (Iterator iterator = root.elementIterator(); iterator.hasNext();) { 
-            Element e = (Element) iterator.next(); 
-            List list = e.elements(); 
-            if(list.size() > 0){ 
-                map.put(e.getName(), buildXml2Map(e)); 
-            }else 
-                map.put(e.getName(), e.getText()); 
-        } 
-        return map; 
+        return buildXml2Map(root); 
     } 
      @SuppressWarnings("unchecked")
     public static Map buildXml2Map(Element e){ 
@@ -123,7 +115,7 @@ public class XmlUtils {
      }
       
      /**
-      * 
+      * 未完待续
       * @param body
       * @param map
       * 根据数据类型，在元素上增加type属性。String类型不添加
@@ -154,19 +146,23 @@ public class XmlUtils {
                                  element.add(attr);
                                  buildMap2XmlAddAttrType(element, (Map<String, Object>) obj);
                              } else if (obj instanceof java.util.List){
-                            	 System.out.println("list");
-                            	 List tmpList = (List) obj;
-                            	 for(Object item:tmpList){
-                            		 Element itemElement = DocumentHelper.createElement(key);
-                            		 if (item instanceof java.lang.Character || obj instanceof java.lang.Boolean || obj instanceof java.lang.Number
-                                             || obj instanceof java.math.BigInteger || obj instanceof java.math.BigDecimal) {
-                                         Attribute attr = DocumentHelper.createAttribute(itemElement, "type", obj.getClass().getCanonicalName());
-                                         itemElement.add(attr);
+                            	 for(Object item:(List)obj){
+                            		 if( item instanceof java.util.Map){
+                            			 Element itemElement = DocumentHelper.createElement(key);
+                            			 buildMap2XmlAddAttrType(itemElement,(Map)item);
+                            			 element.add(itemElement);
+                            		 }else{
+                            			 if (item instanceof java.lang.Character || item instanceof java.lang.Boolean || item instanceof java.lang.Number
+                                                 || item instanceof java.math.BigInteger || item instanceof java.math.BigDecimal) {
+                            				 Element itemElement = DocumentHelper.createElement(key);
+                                             Attribute attr = DocumentHelper.createAttribute(itemElement, "type", item.getClass().getCanonicalName());
+                                             itemElement.add(attr);
+                                             itemElement.setText(String.valueOf(item));
+                                             element.add(itemElement);
                                          }
-                            		 itemElement.setText(String.valueOf(item));
-                            		 body.add(itemElement);
+                            		 }
+                            		
                             	 }
-                            	 continue;
                              }
                          }
                      }
@@ -186,50 +182,29 @@ public class XmlUtils {
              Iterator<String> it = map.keySet().iterator();
              while (it.hasNext()) {
                  String key = (String) it.next();
-                 if (null!=key&&!key.equals("")) {
-                     Object obj = map.get(key);
-                     Element element = DocumentHelper.createElement(key);
-                     if (obj != null) {
-                    	 if (obj instanceof java.lang.String) {
-                             element.setText((String) obj);
-                         } else {
-                        	  if (obj instanceof java.util.Map) {
-                                 buildMap2XmlWithoutAttr(element, (Map<String, Object>) obj);
-                             } else if (obj instanceof java.util.List){
-                            	 System.out.println("list");
-                            	 List tmpList = (List) obj;
-                            	 for(Object item:tmpList){
-                            		 Element itemElement = DocumentHelper.createElement(key);
-                            		 if (item instanceof java.util.Map) {
-                                         buildMap2XmlWithoutAttr(itemElement, (Map<String, Object>) item);
-                            		 }else{
-                                		 itemElement.setText(String.valueOf(item));
-                                		 body.add(itemElement);
-                            		 }
-                            	 }
-                            	 continue;
-                             }
-                         }
-                     }
-                     body.add(element);
+                 Object item = map.get(key);
+                 if (item instanceof java.util.Map) {
+                	 Element itemElement = DocumentHelper.createElement(key);
+                	 buildMap2XmlWithoutAttr(itemElement,(Map)item);
+                	 body.add(itemElement); 
+                 }else if(item instanceof java.util.List){
+                	 for(Object obj:(List)item){
+                		 Element itemElement = DocumentHelper.createElement(key);
+                		 if( obj instanceof java.util.Map){
+                        	 buildMap2XmlWithoutAttr(itemElement,(Map)obj);
+                		 }else{
+                			 itemElement.setText(String.valueOf(obj));
+                		 }
+                		 body.add(itemElement);
+                	 }
+                 }else{
+                	 Element itemElement = DocumentHelper.createElement(key);
+                	 itemElement.setText(String.valueOf(item));
+                	 body.add(itemElement); 
                  }
+                 
              }
     	 }
      }
      
-     public static void buildMap2XmlWithoutAttr(Element body,String key, List list){
-    	 if(null!=list){
-    		 for(Object item:list){
-        		 if (item instanceof java.util.Map) {
-                     buildMap2XmlWithoutAttr(body, (Map<String, Object>) item);
-        		 }else if(item instanceof java.util.List){
-        		 }else{
-        			 Element itemElement = DocumentHelper.createElement(key);
-            		 itemElement.setText(String.valueOf(item));
-            		 body.add(itemElement);
-        		 }
-        	 }
-    	 }
-    	 
-     }
 } 
