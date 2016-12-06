@@ -31,6 +31,8 @@ public class XmlToMapDemo {
 
 //  System.out.println(map.toString());
   String xml = XmlUtils.map2XmlWithoutAttr(map, "rootElement");
+//  String xml = XmlUtils.map2XmlWithoutAttr(map, "rootElement");
+  
   System.out.println(xml);
   System.out.println("Use time:"+(System.currentTimeMillis()-beginTime));
 

@@ -118,7 +118,7 @@ public class XmlUtils {
       * 未完待续
       * @param body
       * @param map
-      * 根据数据类型，在元素上增加type属性。String类型不添加
+      * 根据数据类型，在元素上增加type属性。String,map,list类型不添加
       * eg:<Address type="java.util.Map">
       * <AddressLine3></AddressLine3>
 	  *	<AddressLine2></AddressLine2>
@@ -131,49 +131,50 @@ public class XmlUtils {
                  String key = (String) it.next();
                  if (null!=key&&!key.equals("")) {
                      Object obj = map.get(key);
-                     Element element = DocumentHelper.createElement(key);
+                    
                      if (obj != null) {
                          if (obj instanceof java.lang.String) {
+                        	 Element element = DocumentHelper.createElement(key);
                              element.setText((String) obj);
+                             body.add(element);
                          } else {
                              if (obj instanceof java.lang.Character || obj instanceof java.lang.Boolean || obj instanceof java.lang.Number
                                      || obj instanceof java.math.BigInteger || obj instanceof java.math.BigDecimal) {
+                            	 Element element = DocumentHelper.createElement(key);
                                  Attribute attr = DocumentHelper.createAttribute(element, "type", obj.getClass().getCanonicalName());
                                  element.add(attr);
                                  element.setText(String.valueOf(obj));
+                                 body.add(element);
                              } else if (obj instanceof java.util.Map) {
-                                 Attribute attr = DocumentHelper.createAttribute(element, "type", java.util.Map.class.getCanonicalName());
-                                 element.add(attr);
+                            	 Element element = DocumentHelper.createElement(key);
                                  buildMap2XmlAddAttrType(element, (Map<String, Object>) obj);
+                                 body.add(element);
                              } else if (obj instanceof java.util.List){
                             	 for(Object item:(List)obj){
+                            		 Element itemElement = DocumentHelper.createElement(key);
                             		 if( item instanceof java.util.Map){
-                            			 Element itemElement = DocumentHelper.createElement(key);
                             			 buildMap2XmlAddAttrType(itemElement,(Map)item);
-                            			 element.add(itemElement);
                             		 }else{
                             			 if (item instanceof java.lang.Character || item instanceof java.lang.Boolean || item instanceof java.lang.Number
                                                  || item instanceof java.math.BigInteger || item instanceof java.math.BigDecimal) {
-                            				 Element itemElement = DocumentHelper.createElement(key);
                                              Attribute attr = DocumentHelper.createAttribute(itemElement, "type", item.getClass().getCanonicalName());
                                              itemElement.add(attr);
                                              itemElement.setText(String.valueOf(item));
-                                             element.add(itemElement);
                                          }
                             		 }
-                            		
+                            		 body.add(itemElement);
                             	 }
                              }
                          }
                      }
-                     body.add(element);
+                     
                  }
              }
          }
      }
      
      /**
-      * 生成的xml不添加元素属性
+      * 生成的xml不添加元素属性type
       * @param body
       * @param map
       */
