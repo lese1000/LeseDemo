@@ -15,7 +15,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
   
-  
+  /**
+   * 
+   * @author lese_tech
+   *
+   */
 public class JacksonUtils {  
       
 	    private static final ObjectMapper objectMapper;  
@@ -42,7 +46,7 @@ public class JacksonUtils {
 	    /**1111111
 	     * json string convert to javaBean
 	     */
-	    public static <T> T toObject(String json, Class<T> clazz) {  
+	    public static <T> T toPojo(String json, Class<T> clazz) {  
 	        try {  
 	            return objectMapper.readValue(json, clazz);  
 	        } catch (Exception e) {  
@@ -66,52 +70,70 @@ public class JacksonUtils {
 	    /**222222222
 	     * javaBean,list,array convert to json string
 	     */
-	    public static String obj2Json(Object obj) throws Exception {
-	        return objectMapper.writeValueAsString(obj);
+	    public static String toJson2(Object obj) {
+	    	try {
+	    		return objectMapper.writeValueAsString(obj);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	        return null;
 	    }
 	  
 	    /**
 	     * json string convert to map
 	     */
-	    public static <T> Map<String, Object> json2Map(String jsonStr)
-	            throws Exception {
-	        return objectMapper.readValue(jsonStr, Map.class);
+	    public static <T> Map<String, Object> toMap(String jsonStr){
+	    	try {
+	    		return objectMapper.readValue(jsonStr, Map.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	        return null;
 	    }
 	    
 	    /**
 	     * json string convert to map with javaBean
 	     */
-	    public static <T> Map<String, T> json2Map(String jsonStr, Class<T> clazz)
-	            throws Exception {
-	        Map<String, Map<String, Object>> map = objectMapper.readValue(jsonStr,
-	                new TypeReference<Map<String, T>>() {
-	                });
-	        Map<String, T> result = new HashMap<String, T>();
-	        for (Entry<String, Map<String, Object>> entry : map.entrySet()) {
-	            result.put(entry.getKey(), map2Pojo(entry.getValue(), clazz));
-	        }
-	        return result;
+	    public static <T> Map<String, T> toMap(String jsonStr, Class<T> clazz){
+	    	try {
+	    		 Map<String, Map<String, Object>> map = objectMapper.readValue(jsonStr,
+	 	                new TypeReference<Map<String, T>>() {
+	 	                });
+	 	        Map<String, T> result = new HashMap<String, T>();
+	 	        for (Entry<String, Map<String, Object>> entry : map.entrySet()) {
+	 	            result.put(entry.getKey(), mapToPojo(entry.getValue(), clazz));
+	 	        }
+	 	        return result;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    	return null;
 	    }
 	    
 	    /**
 	     * json array string convert to list with javaBean
 	     */
-	    public static <T> List<T> json2List(String jsonArrayStr, Class<T> clazz)
-	            throws Exception {
-	        List<Map<String, Object>> list = objectMapper.readValue(jsonArrayStr,
-	                new TypeReference<List<T>>() {
-	                });
-	        List<T> result = new ArrayList<T>();
-	        for (Map<String, Object> map : list) {
-	            result.add(map2Pojo(map, clazz));
-	        }
-	        return result;
+	    public static <T> List<T> toList(String jsonArrayStr, Class<T> clazz){
+	    	try {
+	    		List<Map<String, Object>> list = objectMapper.readValue(jsonArrayStr,
+		                new TypeReference<List<T>>() {
+		                });
+		        List<T> result = new ArrayList<T>();
+		        for (Map<String, Object> map : list) {
+		            result.add(mapToPojo(map, clazz));
+		        }
+		        return result;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    	return null;
+	        
 	    }
 
 	    /**
 	     * map convert to javaBean
 	     */
-	    public static <T> T map2Pojo(Map map, Class<T> clazz) {
+	    public static <T> T mapToPojo(Map map, Class<T> clazz) {
 	        return objectMapper.convertValue(map, clazz);
 	    }
 
