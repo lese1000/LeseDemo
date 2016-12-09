@@ -1,5 +1,6 @@
 package tech.lese.demo.other.neoman;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +13,13 @@ import tech.lese.demo.other.neoman.utils.NeomanUtils;
 public class NeomanApiDemo {
 	private static final String uri="http://218.244.150.40/cgi-bin/EmsData.dll?Do";
 	public static void main(String[] args){
-//		System.out.println(getClientAuth());
+		System.out.println(getClientAuth());
 //		System.out.println(getTimeStamp());
 //		System.out.println(clientCreate());
 //		getClientInfo();//ok
 //		getEmsKindList();//ok
 //		getFeeList();//需其他参数筛选
-		getRecList();//需其他参数筛选
+//		getRecList();//需其他参数筛选
 	}
 	
 	public static String getClientAuth(){
@@ -115,6 +116,19 @@ public class NeomanApiDemo {
 	public static void testPreInputSet(){
 		NeoReqParams  neoParams=new NeoReqParams();
 		neoParams.useRecList();
+		String params = JacksonUtils.toJson(neoParams);
+		System.out.println(params);
+		String result = HttpUtils.doPostByString(DoAppUri, params);
+		System.out.println(result);
+	}
+	public static void testPreInputDel(){
+		List<Integer> idsList =new ArrayList<Integer>();
+		idsList.add(1);
+		idsList.add(2);
+		idsList.add(3);
+		NeoReqParams  neoParams=new NeoReqParams();
+		neoParams.usePreInputDel();
+		neoParams.put("iIDs", idsList);
 		String params = JacksonUtils.toJson(neoParams);
 		System.out.println(params);
 		String result = HttpUtils.doPostByString(DoAppUri, params);
