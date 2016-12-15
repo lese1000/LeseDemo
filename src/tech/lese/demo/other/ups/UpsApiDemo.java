@@ -46,22 +46,27 @@ public class UpsApiDemo {
 	
 	public static void testMethod2(){
 //		String uri ="https://wwwcie.ups.com/ups.app/xml/ShipConfirm";
-		String uri ="https://onlinetools.ups.com/ups.app/xml/ShipConfirm";
+//		String uri ="https://onlinetools.ups.com/ups.app/xml/ShipConfirm";
+		String uri ="http://expressweb.ufms.co.kr/if/order/registEMSAIOrderInfo";
 		try {
-			FileInputStream shipConfirmFis = new FileInputStream("F:\\devdocs\\DataHub\\UPSAPI\\Y16W78_LBS.xml");
+//			FileInputStream shipConfirmFis = new FileInputStream("F:\\devdocs\\DataHub\\UPSAPI\\Y16W78_LBS.xml");
+			FileInputStream shipConfirmFis = new FileInputStream("F:\\devdocs\\DataHub\\KR_PO_XML.xml");
 			byte[] b1 = new byte[shipConfirmFis.available()];
 			shipConfirmFis.read(b1);
 			shipConfirmFis.close();
 			String paramStr = new String(b1);
+			System.out.println(paramStr);
 			String result = HttpUtils.doPostByString(uri, paramStr);
-			Map<String, Object> confirmResponseMap = XmlUtils.xml2Map(result);
+			System.out.println(result);
+			
+			/*Map<String, Object> confirmResponseMap = XmlUtils.xml2Map(result);
 			Map responeMap =(Map) confirmResponseMap.get("Response");
 			Object respoStatus = responeMap.get("ResponseStatusCode");
 			System.out.println(respoStatus);
 			if(respoStatus.equals("1")){
 				String shipmentDigest = (String) confirmResponseMap.get("ShipmentDigest");
 				testShipmentAcceptRequest(shipmentDigest);
-			}
+			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

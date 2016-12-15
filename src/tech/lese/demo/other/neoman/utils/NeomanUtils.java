@@ -1,5 +1,6 @@
 package tech.lese.demo.other.neoman.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
 import tech.lese.demo.common.utils.MD5;
@@ -18,6 +19,10 @@ public class NeomanUtils {
 	 */
 	private static String getUserKey(){
 		return "U0sia2bl44crfwT";
+	}
+	
+	private static String getPdaKey(){
+		return "!pok@Ako234nqmor!adF345";
 	}
 	
 	/**
@@ -46,7 +51,29 @@ public class NeomanUtils {
 	public static String getMd5(String timeStamp){
 		return MD5.md5Hex(getCustomerID()+""+timeStamp+getUserKey());
 	}
+	public static String getMd5UsePda(Long timeStamp){
+		return MD5.md5Hex(getCustomerID()+""+timeStamp+getPdaKey());
+	}
+	public static String getMd5UsePda(String timeStamp){
+		return MD5.md5Hex(getCustomerID()+""+timeStamp+getPdaKey());
+	}
 	
+	public static String toLocalString(String str){
+		try {
+			return new String(str.getBytes("iso8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+	public static String toNeoString(String str){
+		try {
+			return new String(str.getBytes("UTF-8"),"iso8859-1");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }
