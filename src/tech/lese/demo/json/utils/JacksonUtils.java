@@ -41,6 +41,8 @@ public class JacksonUtils {
 	        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);  
 	        //单引号处理  
 	        objectMapper.configure(com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);  
+	        //格式化输出json
+	        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 	    }  
 	  
 	    /**1111111
