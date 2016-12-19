@@ -25,6 +25,7 @@ public class JsonDto extends LinkedHashMap<String, Object> implements Serializab
 	public final static String KEY_OBJECT = "obj";
 	public final static String KEY_LIST = "list";
 	public final static String KEY_CRYPTO="crypto";
+	public final static String KEY_PAGE="page";
 	
 	public final static String CODE_SUCCESS = "0000";
 	public final static String CODE_FAILE = "0001";
@@ -124,4 +125,42 @@ public class JsonDto extends LinkedHashMap<String, Object> implements Serializab
 		return jobj.toString();
 	}*/
 
+	public void setPage(PageDto page){
+		this.put(KEY_PAGE, page);
+	}
+	
+	public static class PageDto{
+		private int pageNumber;//第几页
+		private int pageSize;//每页多少条
+		private Long totalElements;//总记录数
+		private int totalPages;//页数
+		
+		
+		public int getPageNumber() {
+			return pageNumber;
+		}
+		public void setPageNumber(int pageNumber) {
+			this.pageNumber = pageNumber;
+		}
+		public int getPageSize() {
+			return pageSize;
+		}
+		public void setPageSize(int pageSize) {
+			this.pageSize = pageSize;
+		}
+
+		public Long getTotalElements() {
+			return totalElements;
+		}
+		public void setTotalElements(Long totalElements) {
+			this.totalElements = totalElements;
+		}
+		public int getTotalPages() {
+			return totalPages;
+		}
+		public void setTotalPages(int totalPages) {
+			this.totalPages = totalPages;
+		}
+		
+	}
 }
