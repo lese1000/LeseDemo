@@ -133,7 +133,7 @@ public class JsonDto extends LinkedHashMap<String, Object> implements Serializab
 		private int pageNumber;//第几页
 		private int pageSize;//每页多少条
 		private Long totalElements;//总记录数
-		private int totalPages;//页数
+		private int totalPages;//总页数
 		
 		
 		public int getPageNumber() {
