@@ -30,7 +30,7 @@ public class RandomUtils {
 	 *            为长度
 	 * @return
 	 */
-	public static String getRandomNumCode(CodeLength length) {
+	public static String getRandomNum(CodeLength length) {
 		Random ran = new Random();
 		int result = 0;
 		switch (length) {
