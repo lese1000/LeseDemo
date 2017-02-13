@@ -150,7 +150,7 @@ public class YouBianCodeUtil {
 		return Integer.parseInt(max_num);
 	}
 	public static String[] cutYouBianCode(String code){
-		if(code==null||StringUtil.isEmpty(code)){
+		if(code==null||"".equals(code)){
 			return null;
 		}else{
 			//获取标准长度为numLength+1,截取的数量为code.length/numLength+1
