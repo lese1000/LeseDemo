@@ -2,6 +2,7 @@ package tech.lese.demo.path;
 
 import java.io.File;
 import java.net.URL;
+import java.net.URLDecoder;
 
 public class GetPath {
 
@@ -9,7 +10,8 @@ public class GetPath {
 //		getClassPathStyle1();
 //		getClassPathStyle2();
 //		getClassPathSub();
-		getClassBehind();
+//		getClassBehind();
+		getCurrentJarFilePath();
 	}
 	
 	/**
@@ -49,6 +51,18 @@ public class GetPath {
 	public static void getClassBehind(){
 		URL classPath = GetPath.class.getClassLoader().getResource("spring/config");//不以‘/’开头，在当前目录查找指定的文件路径，不存在则返回null
 		System.out.println(classPath.getPath());//因为不存在，报空指针异常。
+	}
+	
+	//用于获取可运行jar包所在当前路径。
+	public static void getCurrentJarFilePath(){
+		String tmpPath = GetPath.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		try {
+			tmpPath = URLDecoder.decode(tmpPath, "UTF-8");//解决路径含有中文乱码
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String jarPath = new File(tmpPath).getParent();
+		System.out.println(jarPath);
 	}
 
 }
