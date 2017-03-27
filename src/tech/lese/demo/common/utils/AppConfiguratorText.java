@@ -22,12 +22,12 @@ public class AppConfiguratorText {
 		}
 	}
 	
-	public static void readFile(TextName textName){
+	public static void readTxtFile(TextName textName){
 		readTxtFile(textName.getValue());
 	}
 	
-	public static void writeFile(TextName textName,String content){
-		writeFile(textName.getValue(),content);
+	public static void writeTxtFile(TextName textName,String content){
+		writeTxtFile(textName.getValue(),content);
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class AppConfiguratorText {
 	 * @param filePath  文件路径
 	 * @param content  写入的内容
 	 */
-	public static void writeFile(String fileName,String content){
+	public static void writeTxtFile(String fileName,String content){
 		String filePath = Thread.currentThread().getContextClassLoader().getResource("").getPath()+"../"+fileName;//与bin目录同级下的config目录下的文件
 		System.out.println(filePath);
 		try {
@@ -79,7 +79,7 @@ public class AppConfiguratorText {
 	}
 	
 	public static void main(String[] args){
-		writeFile(TextName.VERSION_CONFIG,"zhangsan");
+		writeTxtFile(TextName.VERSION_CONFIG,"zhangsan");
 	}
 
 }
