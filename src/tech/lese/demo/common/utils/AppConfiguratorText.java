@@ -22,8 +22,8 @@ public class AppConfiguratorText {
 		}
 	}
 	
-	public static void readTxtFile(TextName textName){
-		readTxtFile(textName.getValue());
+	public static String readTxtFile(TextName textName){
+		return readTxtFile(textName.getValue());
 	}
 	
 	public static void writeTxtFile(TextName textName,String content){
