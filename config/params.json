@@ -1,0 +1,31 @@
+{ 
+ 	"transportMode":1001, 
+ 	"shipperRef":"790126618", 
+ 	"remark":"hello",  	"consigneeInfo":{ 
+ 	 	"company":"test company", 
+ 	 	"contact":"monisha", 
+ 	 	"mobile":"00971123456", 
+ 	 	"tel":"00971123456", 
+ 	 	"destCode":"DUBAI", 
+ 	 	"country":"AE", 
+ 	 	"zipCode":"510000", 
+ 	 	"address":"TEST FirstFlight Cargo LLC", 
+ 	 	"address2":"TEST FirstFlight Cargo LLC" 
+ 	}, 
+ 	"cargoInfo":{ 
+ 	 	"service":"NCND", 
+ 	 	"ncndAmt":58.00, 
+ 	 	"packageType":"XPS", 
+ 	 	"noofPieces":1, 
+ 	 	"weight":1 
+ 	}, 
+ 	"invoiceInfo":[ 
+ 	 	{ 
+ 	 	 	"invoiceName":"clothes", 
+ 	 	 	"invoicePCS":"1", 
+ 	 	 	"invoiceWeight":"5.3", 
+ 	 	 	"invoiceInsValue":58, 
+ 	 	 	"invoiceHSCod":"600456789" 
+ 	 	} 
+ 	] 
+} 
