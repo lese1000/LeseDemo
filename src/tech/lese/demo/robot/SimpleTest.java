@@ -19,6 +19,7 @@ public class SimpleTest {
         }.start();  
         
   
+        
         rb.delay(3000);  
         
   
@@ -37,7 +38,7 @@ public class SimpleTest {
         int[] ks = { KeyEvent.VK_C, KeyEvent.VK_M,  
                 KeyEvent.VK_D, KeyEvent.VK_ENTER, };  
         RobotHelper.pressKeys(rb, ks, 500);  
-        rb.mouseMove(400, 400);  
+//        rb.mouseMove(400, 400);  
         rb.delay(500);  
   
         // 运行DIR命令dir enter  
@@ -45,13 +46,20 @@ public class SimpleTest {
                 KeyEvent.VK_ENTER };  
         RobotHelper.pressKeys(rb, ks, 500);  
         rb.delay(1000);  
+        
+        
   
         // 运行CLS命令cls enter  
         ks = new int[] { KeyEvent.VK_C, KeyEvent.VK_L, KeyEvent.VK_S,  
                 KeyEvent.VK_ENTER };  
         RobotHelper.pressKeys(rb, ks, 500);  
         rb.delay(1000);  
-  
+        
+        //粘贴内容--ok
+        RobotHelper.setClipboardData("ping -t www.baidu.com");
+        RobotHelper.doParse(rb);
+        RobotHelper.pressEnter(rb);
+        
         // 运行EXIT命令exit enter  
         ks = new int[] { KeyEvent.VK_E, KeyEvent.VK_X, KeyEvent.VK_I,  
                 KeyEvent.VK_T, KeyEvent.VK_ENTER };  

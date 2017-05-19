@@ -1,15 +1,16 @@
 package tech.lese.demo.robot;
 
 
-import java.awt.Rectangle;  
-import java.awt.Robot;  
-import java.awt.Toolkit;  
-import java.awt.event.InputEvent;  
-import java.awt.event.KeyEvent;  
-import java.awt.image.BufferedImage;  
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
-import javax.swing.Icon;  
-import javax.swing.ImageIcon;  
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /** 
 * @description Robot帮助类，实现基本的功能 
@@ -75,7 +76,18 @@ public class RobotHelper {
           r.keyRelease(ks[i]);  
           r.delay(delay);  
       }  
-  }  
+  }
+  
+  /**
+   * 按下回车
+   * @param r
+   * @param delay
+   */
+  public static void pressEnter(Robot r){
+	  r.keyPress(KeyEvent.VK_ENTER);  
+      r.delay(10);  
+      r.keyRelease(KeyEvent.VK_ENTER);  
+  }
 
   /** 
    * 复制 
@@ -83,8 +95,8 @@ public class RobotHelper {
    * @param r 
    * @throws InterruptedException 
    */  
-  void doCopy(Robot r) throws InterruptedException {  
-      Thread.sleep(3000);  
+  public static void doCopy(Robot r) throws InterruptedException {  
+//      Thread.sleep(3000);  
       r.setAutoDelay(200);  
       r.keyPress(KeyEvent.VK_CONTROL);  
       r.keyPress(KeyEvent.VK_C);  
@@ -98,17 +110,28 @@ public class RobotHelper {
    * @param r 
    * @throws InterruptedException 
    */  
-  void doParse(Robot r) throws InterruptedException {  
+  public static void doParse(Robot r) throws InterruptedException {  
       r.setAutoDelay(500);  
-      Thread.sleep(2000);  
+      /*Thread.sleep(2000);  
       r.mouseMove(300, 300);  
       r.mousePress(InputEvent.BUTTON1_MASK);  
-      r.mouseRelease(InputEvent.BUTTON1_MASK);  
+      r.mouseRelease(InputEvent.BUTTON1_MASK); */ 
       r.keyPress(KeyEvent.VK_CONTROL);  
       r.keyPress(KeyEvent.VK_V);  
       r.keyRelease(KeyEvent.VK_CONTROL);  
       r.keyRelease(KeyEvent.VK_V);  
   }  
+  
+  /**
+   * 设置粘贴板中的内容，用于复制操作
+   * @param string
+   */
+  public static void setClipboardData(String string){
+	     //声明一个StingSelection 对象，并使用String的参数完成实例化；
+	      StringSelection stringSelection = new StringSelection(string);
+	      //使用Toolkit对象的setContents将字符串放到粘贴板中 ；
+	      Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+	  }
 
   /** 
    * 捕捉全屏慕 
@@ -116,7 +139,7 @@ public class RobotHelper {
    * @param r 
    * @return 
    */  
-  public Icon captureFullScreen(Robot r) {  
+  public static Icon captureFullScreen(Robot r) {  
       BufferedImage fullScreenImage = r.createScreenCapture(new Rectangle(  
               Toolkit.getDefaultToolkit().getScreenSize()));  
       ImageIcon icon = new ImageIcon(fullScreenImage);  
@@ -137,13 +160,16 @@ public class RobotHelper {
    *            矩形的高 
    * @return 
    */  
-  public Icon capturePartScreen(Robot r, int x, int y, int width, int height) {  
+  public static Icon capturePartScreen(Robot r, int x, int y, int width, int height) {  
       r.mouseMove(x, y);  
       BufferedImage fullScreenImage = r.createScreenCapture(new Rectangle(  
               width, height));  
       ImageIcon icon = new ImageIcon(fullScreenImage);  
       return icon;  
   }  
+  
+  
+  
 
 }  
 
