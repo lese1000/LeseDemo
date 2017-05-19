@@ -210,5 +210,63 @@ public class FileUtil {
 			}
 		}
 	}
+	
+	/**
+	 * 高效输入流的使用 BufferedInputStream的使用
+	 * */
+	public static String getContentUseCharset(String filePath,String charset) {
+		// 定义一个输入流对象
+		FileInputStream fis = null;
+
+		// 定义一个存放输入流的缓冲对象
+		BufferedInputStream bis = null;
+
+		// 定义一个输出流，相当StringBuffer（），会根据读取数据的大小，调整byte的数组长度
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		String content = null;
+		try {
+			// 把文件路径和文件名作为参数 告诉读取流
+			fis = new FileInputStream(filePath);
+
+			// 把文件读取流对象传递给缓存读取流对象
+			bis = new BufferedInputStream(fis);
+
+			// 获得缓存读取流开始的位置
+			int len = bis.read();
+			System.out.println("len=" + len);
+
+			// 定义一个容量来盛放数据
+			byte[] buf = new byte[1024];
+
+			while ((len = bis.read(buf)) != -1) {
+				// 如果有数据的话，就把数据添加到输出流
+				//这里直接用字符串StringBuffer的append方法也可以接收
+//				new StringBuffer().append(str, offset, len)
+				baos.write(buf, 0, len);
+			}
+
+			// 把文件输出流的数据，放到字节数组
+			byte[] buffer = baos.toByteArray();
+
+			// 打印输出
+			System.out.println(new String(buffer, "gbk"));
+			content = new String(buffer,charset);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				//关闭所有的流 
+				baos.close();
+				bis.close();
+				fis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return content;
+
+	}
 
 }
