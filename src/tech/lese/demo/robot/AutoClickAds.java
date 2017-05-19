@@ -1,12 +1,14 @@
 package tech.lese.demo.robot;
 
-import java.awt.AWTException;  
-import java.awt.Desktop;  
-import java.awt.Robot;  
-import java.awt.event.KeyEvent;  
-import java.io.IOException;  
-import java.net.URI;  
-import java.util.Random;  
+import java.awt.AWTException;
+import java.awt.Desktop;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.util.Random;
+
+import tech.lese.demo.robot.util.RobotHelper;
   
 public class AutoClickAds {  
   

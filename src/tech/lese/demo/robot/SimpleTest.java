@@ -1,8 +1,12 @@
 package tech.lese.demo.robot;
 
-import java.awt.*;  
-import java.awt.event.*;  
-import javax.swing.JOptionPane;  
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JOptionPane;
+
+import tech.lese.demo.robot.util.RobotHelper;
   
 public class SimpleTest {  
       

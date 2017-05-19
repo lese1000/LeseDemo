@@ -1,4 +1,4 @@
-package tech.lese.demo.robot;
+package tech.lese.demo.robot.util;
 
 
 import java.awt.Rectangle;
